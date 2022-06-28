@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
-import { VRisingServerCdkStack } from '../lib/v_rising_server_cdk-stack';
+import { VRisingServerCdkStack } from '../lib/stacks/v_rising_server_cdk-stack';
+import { REGION } from '../lib/constants/constants';
 
 const app = new cdk.App();
 new VRisingServerCdkStack(app, 'VRisingServerCdkStack', {
@@ -15,7 +16,9 @@ new VRisingServerCdkStack(app, 'VRisingServerCdkStack', {
 
   /* Uncomment the next line if you know exactly what Account and Region you
    * want to deploy the stack to. */
-  // env: { account: '123456789012', region: 'us-east-1' },
+  env: { region: REGION },
 
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
 });
+
+app.synth();
