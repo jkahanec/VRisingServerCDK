@@ -33,6 +33,6 @@ export class VRisingServerCdkStack extends Stack {
       // userData: userData,
     });
 
-    gameEC2Server.addToRolePolicy(ManagedPolicy.fromAwsManagedPolicyName('AmazonSSMManagedInstanceCore'));
+    //gameEC2Server.addToRolePolicy(ManagedPolicy.fromAwsManagedPolicyName('AmazonSSMManagedInstanceCore'));
   }
 }

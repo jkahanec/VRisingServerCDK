@@ -18,9 +18,8 @@ A CDK project used to spin up an EC2 instance running Windows to run a V Rising 
 
 
 
-## TODO: Fix Connect to instance in AWS Console
+## Common Issues
 
-Currently getting:
 ```
 We weren't able to connect to your instance. Common reasons for this include:
 SSM Agent isn't installed on the instance. You can install the agent on both Windows instances and Linux instances.
@@ -34,10 +33,13 @@ https://docs.aws.amazon.com/en_us/console/systems-manager/session-manager-prereq
 
 When connecting to the instance in the console
 
-
+Steps To Fix 
+1. Navigate to [AWS Systems Manager](https://us-west-2.console.aws.amazon.com/systems-manager/home?region=us-west-2) in the console
+2. Click `Get Started With Systems Manager`
+3. Run the Quick Setup for Systems Manager
 
 # TODO List:
-1. Get SSM agent working (used to conenct to the instance for debugging issues throughout the rest of the steps)
+1. ~~Get SSM agent working (used to conenct to the instance for debugging issues throughout the rest of the steps)~~
 2. Put V rising Server in S3 so the ec2 instance can pull it from there
 3. Write PowerShell script to pull the server software(Zip file of the server downloaded from steam?) and start the server
 4. Probably fix security group errors/issues from connecting over the internet. (I did nothing except put the instance in a public subnet)
@@ -49,3 +51,17 @@ When connecting to the instance in the console
 
 ## Notes:
 1. Server settings are in: `C:\Program Files (x86)\Steam\steamapps\common\VRisingDedicatedServer\VRisingServer_Data\StreamingAssets\Settings`
+
+
+
+```
+The managed nodes you connect to must also allow HTTPS (port 443) outbound traffic to the following endpoints:
+
+
+ec2messages.region.amazonaws.com
+
+ssm.region.amazonaws.com
+
+ssmmessages.region.amazonaws.com
+
+```
