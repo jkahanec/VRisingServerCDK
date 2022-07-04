@@ -8,10 +8,18 @@ export const WINDOWS_VERSION = WindowsVersion.WINDOWS_SERVER_2019_ENGLISH_FULL_B
 
 // VPC Constants
 export const VPC_CIDR = '10.0.0.0/26';
-// doesn't matter much, since we'll most likely only have one instance,
-// but we'll take three subnets just in case
+// We only have one host, so we'll make a cheap 1 AZ VPC
 export const MAX_AZS = 3;
 export const CIDR_MASK = 27;
 
 // AWS Region to spin up the VPC/ec2 instance in
 export const REGION = 'us-west-2';
+
+// S3 Bucket where the server binary lives
+export const SERVER_S3_BUCKET_NAME = 'v-rising-server-cdk-zip';
+
+// Name of the Zip of the Dedicated Server Files
+export const GAME_SERVER_S3_OBJECT_NAME = 'VRisingDedicatedServer.zip';
+
+// Script used for starting the server reference: start_server_example.bat in the zip
+export const START_SCRIPT = 'start_server.bat';
