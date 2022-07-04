@@ -14,10 +14,6 @@ A CDK project used to spin up an EC2 instance running Windows to run a V Rising 
 * `cdk diff`        compare deployed stack with current state
 * `cdk synth`       emits the synthesized CloudFormation template
 
-
-
-
-
 ## Common Issues
 
 ```
@@ -39,12 +35,10 @@ Steps To Fix
 3. Run the Quick Setup for Systems Manager
 
 # TODO List:
-1. ~~Get SSM agent working (used to conenct to the instance for debugging issues throughout the rest of the steps)~~
-2. Put V rising Server in S3 so the ec2 instance can pull it from there
-3. Write PowerShell script to pull the server software(Zip file of the server downloaded from steam?) and start the server
-4. Probably fix security group errors/issues from connecting over the internet. (I did nothing except put the instance in a public subnet)
-5. Update the UserData to run the game server script on every start/stop (so I can start the instance whenever I want to save money, and all i have to do is start it to make it playable)
-6. Script for starting/stoping the instance. Ideally works for any instance ID (or references the instance in some other static way)
+1. Create a backup for the instance drive to s3
+2. write save script. for now: `Write-S3Object -BucketName v-rising-server-cdk-zip -Key 'AutoSave_xx.zip' -File .\AutoSave_xx.zip` 
+3. Update the UserData to run the game server script on every start/stop (so I can start the instance whenever I want to save money, and all i have to do is start it to make it playable)
+4. Script for starting/stoping the instance. Ideally works for any instance ID (or references the instance in some other static way)
 
 ### Nice to haves
 1. Easier trigger mechanism for restarting the instance/running the script. Ideally i dont have to log into the console and start the instance; something from my phone would be better.
@@ -52,16 +46,26 @@ Steps To Fix
 ## Notes:
 1. Server settings are in: `C:\Program Files (x86)\Steam\steamapps\common\VRisingDedicatedServer\VRisingServer_Data\StreamingAssets\Settings`
 
+## Playing
 
+The Server ID used to connect can be obtained from using SSM to run:
+`Get-Content -Path .\VRisingServer.log | Select-String -Pattern "GameServer ID:"`
 
+With that Server ID which should look like:
+`90160xxxxxxx04036`
+Connect from the V Rising Game by selecting
+1. Play
+2. Online Play
+3. Find Servers (small buttom in bottom right)
+4. Display all Servers & Settings
+5. Direct Connect
+6. Enter the ID and press Connect
+
+If that doesn't work, double check the server is running on the host with: 
+`get-process VRisingServer`
+If it's running you should see:
 ```
-The managed nodes you connect to must also allow HTTPS (port 443) outbound traffic to the following endpoints:
-
-
-ec2messages.region.amazonaws.com
-
-ssm.region.amazonaws.com
-
-ssmmessages.region.amazonaws.com
-
+Handles  NPM(K)    PM(K)      WS(K)     CPU(s)     Id  SI ProcessName
+-------  ------    -----      -----     ------     --  -- -----------
+    123      13  1234567    1234567   1,004.86   1234   0 VRisingServer
 ```
